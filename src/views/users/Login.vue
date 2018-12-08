@@ -1,0 +1,76 @@
+<template>
+<b-modal id="myModal"  hide-footer centered title="Logowanie">
+    <form  @submit.prevent="login()">
+    <div class="form-group">
+        <label for="email">Login: </label>
+        <input 
+                v-model="user.email"
+                type="email" 
+                class="form-control" 
+                id="email" 
+                aria-describedby="emailHelp" 
+                placeholder="Enter email" required>
+    </div>
+    <div class="form-group">
+        <label for="password">Password: </label>
+        <input 
+                v-model="user.password" 
+                type="password" 
+                class="form-control" 
+                id="password"
+                aria-describedby="passwordHelp" 
+                placeholder="Password" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+</b-modal>
+</template>
+
+<script>
+    export default {
+        data() {
+            return {
+                user: {
+                    email:'',
+                    password:''
+                }
+            }
+        },
+        methods: {
+            login() {
+                this.$store.dispatch('login', this.user);
+            }
+        },
+        created: function () {
+        }
+    }
+</script>
+<style scoped>
+.btn {
+  border-radius: 0px;
+  font-size: 1.2rem;
+  background-color: #003c82;
+  border: none;
+}
+
+.btn:hover{
+  border-radius: 0px;
+  font-size: 1.2rem;
+  background-color: #035abd;
+}
+input.form-control {
+    border-radius: 0;
+    border-color: #fff;
+    border-bottom: 1px solid rgb(182, 182, 182);
+}
+input.form-control:focus {
+    box-shadow: none;
+}
+input.form-control:hover {
+    border-radius: 0;
+    border-color: #fff;
+    border-bottom: 2px solid #003c82;
+    box-shadow: none;
+}
+
+</style>

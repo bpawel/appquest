@@ -10,7 +10,7 @@
             <button class="btn btn-danger btn-xs ml-3 mt-3" @click="removeRow(index)">-</button>
         </div>
     </div>
-    <form v-for="(quiz, index) in quiz" :key="index.id" >
+    <form v-for="(addAnswer, index) in addAnswers" :key="addAnswer.id" >
         <tr >
             <td>
                 {{ index + 1 }}.
@@ -22,7 +22,7 @@
                         <input type="checkbox" aria-label="Checkbox for following text input">
                     </div>
                     </div>
-                    <input type="text" class="form-control" aria-label="Text input with checkbox">
+                    <input type="text" v-model="addAnswer.name" class="form-control" aria-label="Text input with checkbox">
                 </div>
             </td>
         </tr>       
@@ -33,30 +33,31 @@
 </template>
 
 <script>
+
 import axios from 'axios'
 import router from '../router'
 import Vue from 'vue'
 
 
 export default {
-    
+    props: ['addAnswers'],
     data() {
         return {
-             quiz: [{}],
+             
         }
            
     },
     methods: {
         addRow: function (index) {
             try {
-                this.quiz.splice(index + 1, 0, {});
+                this.addAnswers.splice(index + 1, 0, {});
             } catch(e)
             {
                 console.log(e);
             }
         },
         removeRow: function (index) {
-            this.quiz.splice(index, 1);
+            this.addAnswers.splice(index, 1);
         },
     }
 }

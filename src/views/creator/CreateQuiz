@@ -27,11 +27,51 @@
             <b-form-select v-model="quiz.type" :options="options" />
           </div>
           </template>
-          <template>
+           <div >
+               <b-card v-for="(q, index) in quiz" v-bind:key="index" class="mt-5 mb-5">
+        
+           
+                <h2 class="card-title">Pytanie {{index+1}} </h2>
+                <i></i>
+                <input placeholder="Wprowadź pytanie"  class="form-control"  v-model="q.name" />
+                <button  class="btn btn-primary btn-xs mt-3" @click="add(index)">Dodaj Pytanie</button>
+                <button class="btn btn-danger btn-xs ml-3 mt-3" @click="remove(index)">Usuń Pytanie</button>
+                <!-- <AddQuestions v-bind:props1="quiz"></AddQuestions> -->
 
-                <AddQuestions v-bind:addQuestions="quiz" v-bind:addAnswer="quiz1"> </AddQuestions>
-      
-          </template>
+            <div class="ml-5" >
+                <div class="d-flex flex-row">
+                    <div >
+                        <h4 class="mt-4 mr-4">Dodaj odpowiedź:</h4>
+                    </div>
+                    <div >
+                        <button class="btn btn-primary btn-xs mt-3" @click="addRow(index)">+</button>
+                        <button class="btn btn-danger btn-xs ml-3 mt-3" @click="removeRow(index)">-</button>
+                    </div>
+                </div>
+            </div>
+              <form v-for="(qq, index) in quiz1" v-bind:key="index" >
+                <tr >
+                <td>
+                {{ index + 1 }}.
+                </td>
+                <td> 
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                    <div class="input-group-text">
+                        <input type="checkbox" aria-label="Checkbox for following text input">
+                    </div>
+                    </div>
+                    <input class="form-control" v-model="qq.name" aria-label="Text input with checkbox">
+                </div>
+                </td>
+                </tr>       
+            </form>
+             </b-card> 
+       
+           
+
+          
+           </div> 
              <button  v-on:click="createQuiz(quiz)" class="btn btn-success mb-5">Dodaj Test</button>
           </div>
         </div>
@@ -50,7 +90,7 @@ import WelcomeMessage from '../welcome/WelcomeMessage.vue'
 import ActionLinks from '../links/ActionLinks.vue'
 import Logout from '../../components/Logout.vue'
 import AddQuestions from '../../components/AddQuestions.vue'
-import AddAnswers from '../../components/AddAnswers.vue'
+
 
 export default {
     
@@ -59,7 +99,6 @@ export default {
       ActionLinks,
       Logout,
       AddQuestions,
-      AddAnswers,
     },
      data () {
     return {
@@ -69,6 +108,7 @@ export default {
             {label: 'Stwórz Klase', link: 'createClass'},
             {label: 'Stwórz Test', link: 'createQuiz'},
           ],
+      list:'',
       errors:[],
       quiz: [{
         name:'',
@@ -79,7 +119,8 @@ export default {
           validAnswers: []
         },
       }],
-      quiz1: [],
+        quiz1: [],
+
       selected: null,
       options: [
           { value: null, text: 'Please select type' },
@@ -109,6 +150,31 @@ export default {
           
           this.errors.push(e);
       }
+    },
+     add: function (index) {
+
+        try {
+            
+            this.quiz.splice(index + 1, 0, {});
+        } catch(e)
+        {
+            console.log(e);
+        }
+        },
+    remove: function (index) {
+        this.quiz.splice(index, 1);
+    },
+
+     addRow: function (index) {
+        try {
+            this.quiz1.push({});
+        } catch(e)
+        {
+            console.log(e);
+        }
+    },
+    removeRow: function (index) {
+        this.quiz1.splice(index, 1);
     },
     }
 }

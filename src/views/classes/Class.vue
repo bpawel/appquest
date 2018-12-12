@@ -46,6 +46,7 @@ export default {
         actions: [
            {label: 'Moje Klasy', link: 'studentDashboard'},
            {label: 'Dołącz do klasy', link: 'class'},
+           {label: 'Statystyki', link: 'resultDashboard'},
         ],
         list:[],
         fields: [ '_id', 'name', 'show_details', 'test', ],

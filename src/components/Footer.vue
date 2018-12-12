@@ -1,7 +1,7 @@
 <template>
     <footer class="footer">
       <div class="container">
-        <span class="text-muted">Projekt AppQuest &copy; 2018.</span>
+        <span class="text-muted" style="color:#fff !important">Projekt AppQuest &copy; 2018.</span>
       </div>
     </footer>
 </template>
@@ -20,8 +20,5 @@ export default {
     height: 60px;
     line-height: 60px;
     background-color: #003c82;
-}
-.text-muted{
-  color: #fff !important; 
 }
 </style>

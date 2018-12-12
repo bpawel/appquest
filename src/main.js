@@ -10,7 +10,10 @@ import axios from "axios";
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faTrash, faCheck, faEdit, faBan } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import "chart.js";
+import "hchs-vue-charts";
 
+Vue.use(window.VueCharts);
 library.add(faTrash, faCheck, faEdit, faBan);
 Vue.use(vueResource);
 Vue.use(BootstrapVue);

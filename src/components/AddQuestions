@@ -1,0 +1,42 @@
+<template>
+<div>
+ <button class="btn btn-primary btn-xs mt-3" @click="add(index)">Dodaj Pytanie</button>
+<button class="btn btn-danger btn-xs ml-3 mt-3" @click="remove(index)">Usuń Pytanie</button>
+</div>   
+</template>
+
+<script>
+import axios from 'axios'
+import router from '../router'
+import Vue from 'vue'
+import AddAnswers from './AddAnswers.vue'
+
+
+export default {
+    props: ['props1'],
+    data() {
+        return {
+             
+        }
+    },
+    methods: {
+        
+        add: function (index) {
+            try {
+                this.props1.splice(index + 1, 0, {});
+            } catch(e)
+            {
+                console.log(e);
+            }
+        },
+        remove: function (index) {
+            this.props1.splice(index, 1);
+        },
+    }
+}
+
+</script>
+
+<style>
+
+</style>

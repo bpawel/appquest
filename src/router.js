@@ -17,6 +17,8 @@ import ListClassesInstructor from './views/list/instructor/ListClassesInstructor
 import CreateClass from './views/creator/CreateClass.vue';
 import CreateQuiz from './views/creator/CreateQuiz.vue';
 import ListQuizzesInstructor from './views/list/instructor/ListQuizzesInstructor.vue';
+import QuizDashboard from './views/dashboards/QuizDashboard.vue';
+import ResultDashboard from './views/dashboards/ResultDashboard.vue';
 
 Vue.use(Router);
 
@@ -98,6 +100,16 @@ export default new Router({
       path: '/class',
       name: 'class',
       component: Class,
+    },
+    {
+      path: '/quizDashboard',
+      name: 'quizDashboard',
+      component: QuizDashboard,
+    },
+    {
+      path: '/resultDashboard',
+      name: 'resultDashboard',
+      component: ResultDashboard,
     },
   ],
 });

@@ -6,14 +6,13 @@
     <Quiz url="https://api.myjson.com/bins/ahn1p">
 
     <div slot="intro" slot-scope="props">
-      This is my custom quiz header for {{props.title}}.
+       {{props.title}}.
     </div>
   
     <div slot="results" slot-scope="props">
       <h1>GRATULACJE!</h1> 
-        You got {{props.correct}} right out of 
-        {{props.length}} questions. 
-      Your percentage is {{props.perc}}%.
+         {{props.correct}} / {{props.length}} questions. 
+        Twój wynik:  {{props.perc}}%.
     </div>
   </Quiz>
 </b-card>

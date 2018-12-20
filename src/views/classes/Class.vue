@@ -49,7 +49,8 @@ export default {
            {label: 'Statystyki', link: 'resultDashboard'},
         ],
         list:[],
-        fields: [ '_id', 'name', 'show_details', 'test', ],
+        fields: [ 
+          '_id', 'name', 'show_details', 'test', ],
         group: {
           id: '',
           name: '',

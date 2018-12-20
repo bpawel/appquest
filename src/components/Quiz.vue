@@ -2,9 +2,9 @@
 <div>
   <div v-if="introStage">
     <slot name="intro" :title="title">
-    <h1>Welcome to the Quiz: {{title}}</h1>
+    <h1>Witaj w quzie: {{title}}</h1>
     <p>
-      Some kind of text here. Blah blah.
+      LOREM IPSUM.
     </p>    
     </slot>
     <button class="btn btn-success mb-5" @click="startQuiz">START!</button>
@@ -80,7 +80,7 @@ data() {
       this.questionStage = true;
     },
     handleAnswer(e) {
-      console.log('answer event ftw',e);
+      console.log(e);
       this.answers[this.currentQuestion]=e.answer;
       if((this.currentQuestion+1) === this.questions.length) {
         this.handleResults();

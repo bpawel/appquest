@@ -35,6 +35,7 @@ const store = new Vuex.Store({
     [types.LOGIN] (state, payload) {
         state.logged = 1;
         state.user = payload.user;
+
         state.token = payload.token;
     },
 

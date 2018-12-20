@@ -14,7 +14,7 @@
           <div>
             <h2>Nazwa Testu: </h2>
             <b-form-textarea minlength="2" id="textarea1"
-                            v-model="quiz.que"
+                            v-model="quiz.name"
                             placeholder="Enter something"
                             :rows="1"
                             :max-rows="1">
@@ -22,17 +22,17 @@
           </div>
           </template>
           <template>
-          <div  class="mt-3">
-            <h2>Typ Testu: </h2>
-            <b-form-select v-model="quiz.type" :options="options" />
-          </div>
+         
           </template>
           <template>
-
-                <AddQuestions v-bind:addQuestions="quiz" v-bind:addAnswer="quiz1"> </AddQuestions>
-      
+              
+                 
+                <QuestionEditor v-bind:questions="question"> </QuestionEditor>
+                
           </template>
-             <button  v-on:click="createQuiz(quiz)" class="btn btn-success mb-5">Dodaj Test</button>
+             <button  v-on:click="createQuiz(quiz, question)" class="btn btn-success mb-5">Dodaj Test</button>
+
+              
           </div>
         </div>
         <div class="col-md-3 wrap">
@@ -49,8 +49,7 @@ import router from '../../router'
 import WelcomeMessage from '../welcome/WelcomeMessage.vue'
 import ActionLinks from '../links/ActionLinks.vue'
 import Logout from '../../components/Logout.vue'
-import AddQuestions from '../../components/AddQuestions.vue'
-import AddAnswers from '../../components/AddAnswers.vue'
+import QuestionEditor from '../../components/QuestionEditor.vue'
 
 export default {
     
@@ -58,11 +57,11 @@ export default {
       WelcomeMessage,
       ActionLinks,
       Logout,
-      AddQuestions,
-      AddAnswers,
+      QuestionEditor,
     },
      data () {
     return {
+      checkedNames: [],
       actions: [
             {label: 'Moje Klasy', link: 'listClassesInstructor'},
             {label: 'Moje Testy', link: 'listQuizzesInstructor'},
@@ -70,40 +69,28 @@ export default {
             {label: 'Stwórz Test', link: 'createQuiz'},
           ],
       errors:[],
-      quiz: [{
-        name:'',
-        type:'',
-        question: {
-          ques: '',
-          answers: [],
-          validAnswers: []
-        },
-      }],
-      quiz1: [],
-      selected: null,
-      options: [
-          { value: null, text: 'Please select type' },
-          { value: 'open', text: 'open' },
-          { value: 'closed', text: 'closed' },
-          { value: 'true/false', text: 'true/false' },
-          { value: 'multiple', text: 'multiple' }
-        ]
-    
-    }
+      quiz: {},
+      question: [{
+        questionName: '',
+        type: '',
+        answers: [],
+        validAnswers: []
+    }],
+      
+      }
     },
     methods: {
-
-    async createQuiz(quiz){
+      
+  
+     
+    async createQuiz(quiz, question){
       try{
-         await axios.post("http://localhost:3000/v1/quiz/" ,  {
+        let add = await axios.post("http://localhost:3000/v1/quiz/" ,  {
               name: quiz.name,
-              type: quiz.type,
-              question: [{
-                ques: quiz.question.ques,
-                answers: quiz.question.answers 
-              }]
+              type: question.type,
+              question: this.question,
             });
-            console.log(quiz.type),
+    
         router.push({path: '/listQuizzesInstructor'});
       }catch(e) {
           

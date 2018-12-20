@@ -16,12 +16,13 @@
             <h5 class="card-title">{{groups.name}}</h5>
             <p>{{groups.description}}</p>
             <h6 class="card-subtitle mb-2 text-muted">Wykładowca: {{groups.instructor}}</h6>
+            <h6 class="card-subtitle mb-2 text-muted">quiz: {{groups.quiz}}</h6>
             <hr class=" mb-5">
             Wybierz Test i zapisz do Klasy:
-            <select v-model="quiz.name"  class="form-control form-control-sm">
-            <option v-for="quizzes in listQuiz" :key="quizzes.id">{{quizzes.name}}</option>
-        </select>
-        <button  v-on:click="addQuiz(quiz)" class="btn btn-success mt-5 mb-5">Dodaj Test do Klasy</button>
+            <select id="isQuiz"  @change="onchange()"  v-model="groups.quiz" class="form-control form-control-sm">
+                <option for="isQuiz" v-for="quizzes in listQuiz" :key="quizzes.id">{{quizzes.name}}</option>
+            </select>
+        <button  v-on:click="addQuiz(groups)" class="btn btn-success mt-5 mb-5">Dodaj Test do Klasy</button>
             </b-card>
           </div>
         </div>
@@ -61,18 +62,16 @@ export default {
         ],
         list:[],
         listQuiz:[],
+        selected: [],
         group: {
           id: '',
           name: '',
           description: '',
           instructor: '',
+          quiz: [],
         },
-        quiz: {
-            id: '',
-            name: '',
-            quiz: [],
-        },
-        errors: []   
+        quiz: [],
+        errors: [],
         }
     },
     created () {
@@ -80,6 +79,17 @@ export default {
         this.getQuiz();
     },
     methods: {
+    onchange: function() {
+         try {  
+                let groups = this.group.quiz;
+                this.groups.push(this.quiz.name);       
+            } catch(e)
+            {
+                console.log(e);
+            }
+    	console.log([this.group.quiz])
+    },
+ 
         async  getGroup() {
            try {
                let ID = this.$store.state.user.id;
@@ -97,12 +107,14 @@ export default {
            } catch (errors) {
                this.errors.push(errors)
            }
+           
        },
         async addQuiz(group){
         try{
-            await axios.put(`http://localhost:3000/v1/class/` + group.id ,  {
-                quiz: this.$store.state.quiz.name,
+            await axios.put("http://localhost:3000/v1/class/" + group.id,  {
+                    quiz: this.quiz.name,
             });
+             //this.group.quiz = this.quiz.name;
         }catch(e) {
           //console.log(user);
           this.errors.push(e);

@@ -47,7 +47,7 @@ const store = new Vuex.Store({
 
     registerSuccess(state) {
       state.status = {};
-  },
+    },
 },
   actions: {
     login ({commit, state}, credential) {
@@ -72,11 +72,10 @@ const store = new Vuex.Store({
           .then((result) => {
               localStorage.setItem('token', JSON.stringify(result.token));
               commit('registerSuccess');
-              router.push({path: '/'});
           });
           
-  },
-
+    },
+    
     logout({commit}) {
                 localStorage.removeItem('token');
                 commit(types.LOGOUT);

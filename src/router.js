@@ -19,6 +19,8 @@ import CreateQuiz from './views/creator/CreateQuiz.vue';
 import ListQuizzesInstructor from './views/list/instructor/ListQuizzesInstructor.vue';
 import QuizDashboard from './views/dashboards/QuizDashboard.vue';
 import ResultDashboard from './views/dashboards/ResultDashboard.vue';
+import ForgotPassword from './views/reset/password/ForgotPassword.vue';
+import ResetPassword from './views/reset/password/ResetPassword.vue';
 
 Vue.use(Router);
 
@@ -110,6 +112,16 @@ export default new Router({
       path: '/resultDashboard',
       name: 'resultDashboard',
       component: ResultDashboard,
+    },
+    {
+      path: '/forgot-password',
+      name: 'forgotPassword',
+      component: ForgotPassword,
+    },
+    {
+      path: '/reset-password',
+      name: 'resetPassword',
+      component: ResetPassword,
     },
   ],
 });

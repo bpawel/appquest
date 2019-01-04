@@ -1,7 +1,7 @@
 <template>
    
 <div>
-  <b-modal id="register"  hide-footer centered title="Rejestracja">
+  <b-modal  ref="myModalRef" id="register"  hide-footer centered title="Rejestracja">
      <div>
         <div class="container">
           </div>
@@ -10,39 +10,39 @@
             </div>
             <form @submit.prevent="register()">
                 <div class="form-group">
-                    <label for="email">Email: </label>
+                    <label >Email: </label>
                     <input
                     v-model="user.email"
                     type="email"
                     class="form-control"
-                    id="#email"
+                    
                     aria-describedby="emailHelp"
-                    placeholder="Enter Email" required>
+                    placeholder="Wprowadź email" required>
                     <small id="emailHelp" class="form-text text-muted"></small>
                 </div>
                 <div class="form-group">
-                    <label for="password">Password: </label>
+                    <label >Hasło: </label>
                     <input
                     v-model="user.password"
                     type="password"
                     class="form-control"
-                    id="#password"
+                    
                     aria-describedby="passwordHelp"
-                    placeholder="Enter Password" required>
+                    placeholder="Wprowadź hasło" required>
                     <small id="passwordHelp" class="form-text text-muted"></small>
                 </div>
                 <div class="form-group">
-                    <label for="password2">Confirm Password: </label>
+                    <label >Potwierdź hasło: </label>
                     <input
                     v-model="user.password2"
                     type="password"
                     class="form-control"
-                    id="password2"
+                    
                     aria-describedby="password2Help"
-                    placeholder="Enter Confirm Password" required>
+                    placeholder="Wprowadź potwierdzone hasło" required>
                     <small id="password2Help" class="form-text text-muted"></small>
                 </div>
-                <button type="submit" class="btn btn-primary">Zarejestruj</button>
+                <button data-dismiss="b-modal" type="submit" class="btn btn-primary">Zarejestruj</button>
             </form>
         </div>
   </b-modal>
@@ -73,7 +73,9 @@ export default {
     register() {
       if(this.validUser()) {
       this.$store.dispatch('register', this.user);
+      this.$refs.myModalRef.hide()
       }
+        
     },
     validUser() {
       if (this.user.password !== this.user.password2) {
@@ -125,6 +127,8 @@ export default {
   background-color: #003c82;
   color: #fff;
   padding: 30px;
+  border-top-left-radius: 0rem;
+    border-top-right-radius: 0; 
 }
 input.form-control {
     border-radius: 0;

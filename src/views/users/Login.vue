@@ -8,26 +8,27 @@
     <form  @submit.prevent="login()">
        
     <div class="form-group">
-        <label for="email">Login: </label>
+        <label for="email">Email: </label>
         <input 
                 v-model="user.email"
                 type="email" 
                 class="form-control" 
                 id="email" 
                 aria-describedby="emailHelp" 
-                placeholder="Enter email" required>
+                placeholder="Wprowadź email" required>
     </div>
     <div class="form-group">
-        <label for="password">Password: </label>
+        <label for="password">Hasło: </label>
         <input 
                 v-model="user.password" 
                 type="password" 
                 class="form-control" 
                 id="password"
                 aria-describedby="passwordHelp" 
-                placeholder="Password" required>
+                placeholder="Wprowadź hasło" required>
     </div>
-    <button type="submit" class="btn btn-primary">Login</button>
+    <button type="submit" class="btn btn-primary">Zaloguj się</button>
+    <router-link to="/forgot-password">Zapomniałeś hasło?</router-link>
     </form>
 </b-modal>
 </template>
@@ -83,5 +84,8 @@ input.form-control:hover {
     border-bottom: 2px solid #003c82;
     box-shadow: none;
 }
-
+a[data-v-2607fb58] {
+    margin-left: 5%;
+    color: #003c82;
+}
 </style>

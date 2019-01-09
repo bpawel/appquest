@@ -15,7 +15,7 @@
             <h2>Nazwa Testu: </h2>
             <b-form-textarea minlength="2" id="textarea1"
                             v-model="quiz.name"
-                            placeholder="Enter something"
+                            placeholder="Wprowadź nazwę testu"
                             :rows="1"
                             :max-rows="1">
             </b-form-textarea>

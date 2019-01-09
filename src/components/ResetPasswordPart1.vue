@@ -53,31 +53,35 @@ export default {
       errorMessage: '',
       user: {
         password: '',
-        password2: ''
+        password2: '',
+        resetPassword:''
       }
     }
   },  
   methods: {
-   async resetPassword() {
-      if(this.validUser()) {
-      try{
-        await axios.post("http://localhost:3000/v1/auth/reset-password",  {
-            password: this.user.password,
-            password2: this.user.password2,
-        });
-        user.password = '';
-        user.password2 = '';
-        // router.push({path: '/'});
-        }catch(e) {
-        //console.log(user);
-        this.errors.push(e);
-        }
+   
+  async resetPassword() {
+    if(this.validUser()) {
+    try{
+      await axios.post("http://localhost:3000/v1/auth/reset-password?token=" + this.$store.state.user.resetPassword,  {
+          password: this.user.password,
+          password2: this.user.password2,
+      });
+      console.log(this.$store.state.user.resetPassword);
+      user.password = '';
+      user.password2 = '';
+      // router.push({path: '/'});
+      }catch(e) {
+      //console.log(user);
+      this.errors.push(e);
       }
+    }
         
     },
     validUser() {
       if (this.user.password !== this.user.password2) {
         this.errorMessage = 'Password must match.';
+        console.log(this.$store.state.user.resetPassword);
         return false;
       }
      

@@ -25,7 +25,7 @@
                 </div>
             </td>
         </tr>    
-        <span>Checked names: {{ answer.validAnswer }}</span>   
+        <span>Poprawna odpowiedź: {{ answer.validAnswer }}</span>   
     </form>
     
 </div>

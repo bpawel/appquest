@@ -15,7 +15,7 @@
             <h2>Nazwa Klasy: </h2>
             <b-form-textarea minlength="2" id="textarea1"
                             v-model="group.name"
-                            placeholder="Enter something"
+                            placeholder="Wprowadź nazwę klasy"
                             :rows="1"
                             :max-rows="1">
             </b-form-textarea>
@@ -26,7 +26,7 @@
             <h2>Opis: </h2>
             <b-form-textarea minlength="2" id="textarea1"
                             v-model="group.description"
-                            placeholder="Enter something"
+                            placeholder="Wprowadź temat lekcji"
                             :rows="3"
                             :max-rows="6">
             </b-form-textarea>

@@ -1,91 +1,102 @@
 <template>
-    <div class="" id="">
-        <div class="container">
-            <div class="row"> 
-            <div class="col-md-9 col-table">
-                 
-              <ul v-if="errors && errors.length">
-                        <li v-for="error of errors" :key="error.id">
-                        {{error.message}}
-                    </li>
-              </ul>
+  <div class="" id="">
+    <div class="container">
+      <div class="row"> 
+        <div class="col-md-9 col-table">
+            
+          <ul v-if="errors && errors.length">
+                    <li v-for="error of errors" :key="error.id">
+                    {{error.message}}
+                </li>
+          </ul>
               
-             <h5>UŻYTKOWNICY</h5>  
-             <i></i>
-            <b-card>
-        <div class="table-responsive">
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">
-                 ID Użytkownika
-                </th>
-                <th>
-                 Email
-                </th>
-                <th>
-                 Role
-                </th>
-                <th>
-                 Akcja
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="user in list"  :key="user.id">
-                <template v-if="editId == user.id" >
-                  <td><input v-model="user.id"  type="text"> </td>
-                  <td><input v-model="user.email" type="text"></td>
-                  <td><input v-model="user.role" type="text"></td>
-                  <td>
+          <h5>UŻYTKOWNICY</h5>  
+          <i></i>
+          <b-card>
+              
+          <div class="table-responsive ">
+            <b-col  class="my-1">
+            <b-form-group horizontal label="Filter: " class="mb-0">
+              <b-input-group>
+                <b-form-input v-model="filter" placeholder="Szukaj" />
+                <b-input-group-append>
+                  <b-btn :disabled="!filter" @click="filter = ''">Reset</b-btn>
+                </b-input-group-append>
+                </b-input-group>
+              </b-form-group>
+            </b-col>
+            <b-col  class="my-1">
+              <b-form-group horizontal label="Na strone: " class="mb-0">
+                <b-form-select :options="pageOptions" v-model="perPage" />
+              </b-form-group>
+            </b-col>
+            
+            <b-table v-if="editId == user.id" striped hover 
+                    :items="user" 
+                    :fields="fields"
+                    :filter="filter"
+                    @filtered="onFiltered"
+                    :current-page="currentPage"
+                    :per-page="perPage">
+              
+            <template slot="email" scope="data">
+              <b-form-group >
+                <input v-model="data.item.email" type="text">
+              </b-form-group>
+            </template>
+            
+            <template slot="role" scope="data">
+              <b-form-select v-model="data.item.role" :options="options"/>
+            </template>
+
+            <template slot="actions" slot-scope="data">
+              <a href="#" class="icon">
+                  <font-awesome-icon v-on:click="editUser(data.item)"  icon="check" />
+                </a>
                   <a href="#" class="icon">
-                    <font-awesome-icon v-on:click="editUser(user)"  icon="check" />
-                  </a>
-                   <a href="#" class="icon">
-                    <font-awesome-icon v-on:click="onCancel()"  icon="ban" />
-                  </a>
-                  </td>
-                  <!-- <td><button v-on:click="onEdit(user)" size="sm" class="mr-2 btn btn-success btn-block">Edit</button></td>
-                  <td><button v-on:click="deleteUser(user.id)" size="sm" class="mr-2 btn btn-danger btn-block">Delete</button></td> -->
-                </template>
-                <template v-else >
-                  <td >
-                    {{user.id}}
-                  </td>
-                  <td>
-                    {{user.email}}
-                  </td>
-                  <td>
-                    {{user.role}}
-                  </td>
-                  <td>
-                   
-                    <a href="#" class="icon">
-                      <font-awesome-icon v-on:click="onEdit(user)" icon="edit" />
-                    </a>
-                     <a href="#" class="icon">
-                      <font-awesome-icon v-on:click="deleteUser(user.id)" icon="trash" />
-                    </a>
-                  
-                  </td>
-                </template>
-              </tr>
-            </tbody>
-          </table>
+                  <font-awesome-icon v-on:click="onCancel()"  icon="ban" />
+                </a>
+            </template>
+            
+            </b-table>
+            <b-table v-else striped hover 
+                    :items="user" 
+                    :fields="fields"
+                    :filter="filter"
+                    @filtered="onFiltered"
+                    :current-page="currentPage"
+                    :per-page="perPage">
+
+              <template slot="actions" slot-scope="data">
+                <a href="#" class="icon">
+                  <font-awesome-icon v-on:click="onEdit(user)" icon="edit" />
+                </a>
+                <a href="#" class="icon">
+                  <font-awesome-icon @click="deleteUser(data.item.id)" icon="trash" />
+                </a>
+              </template>
+              </b-table>
+            </div>
+            <b-row>
+              <b-col  class="my-4">
+                <b-pagination align="center" :total-rows="totalRows" :per-page="perPage" v-model="currentPage" class="my-0" />
+              </b-col>
+            </b-row>
+          </b-card>
         </div>
-      </b-card>
-      </div>
-      <div class="col-md-3 wrap">
-        <ActionLinks v-bind:actions="actions" ></ActionLinks>
-      </div>
+        <div class="col-md-3 wrap">
+          <ActionLinks v-bind:actions="actions" ></ActionLinks>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+
 import axios from 'axios'
 import Vue from 'vue'
+import VeeValidate from 'vee-validate';
 import ActionLinks from '../../links/ActionLinks.vue'
 import WelcomeMessage from '../../welcome/WelcomeMessage.vue'
 import Logout from '../../../components/Logout.vue'
@@ -97,7 +108,6 @@ export default {
       Logout,
     },
     data () {
-        
         return {
         actions: [
           {label: 'Użytkownicy', link: 'listUsers'},
@@ -105,27 +115,49 @@ export default {
           {label: 'Testy', link: 'listQuiz'},
         ],
         editId: '',
-        list: [],
         errors:[],
         user: {
           id: '',
           email: '',
           role: '',
-        
         },
+        selected: null,
+        options: [
+          { value: 'student', text: 'student' },
+          { value: 'instructor', text: 'instructor' },
+          { value: 'admin', text: 'admin' }
+        ],
+        fields: [ 
+          {key: 'id', label: 'Id Użytkownika'}, 
+          {key: 'email', label: 'Email'}, 
+          {key: 'role', label: 'Role'},
+          {key: 'actions' } 
+        ],
+        items: this.user,
+        filter: null,
+        currentPage: 1,
+        perPage: 5,
+        totalRows: this.user,
+        pageOptions: [ 5, 10, 15 ],
         loggedInUser: this.$store.state.user,
         };
     },
-    
     created () {
-        this.getUsers();
+      this.getUsers();
     },
-            
+    computed: {
+    sortOptions () {
+      // Create an options list from our fields
+      return this.fields
+        .filter(f => f.sortable)
+        .map(f => { return { text: f.label, value: f.key } })
+    }
+    },       
     methods: {
        async getUsers(){
         try{
             let user = await axios.get("http://localhost:3000/v1/users");
-            this.list = user.data;
+            this.user = user.data;
 
         }catch(e) {
             this.errors.push(e);
@@ -168,6 +200,11 @@ export default {
           //console.log(user);
           this.errors.push(e);
       }
+    },
+    onFiltered (filteredItems) {
+      // Trigger pagination to update the number of buttons/pages due to filtering
+      this.totalRows = filteredItems.length
+      this.currentPage = 1
     },
   
     }
@@ -241,4 +278,17 @@ ul {
   margin: 0;
   padding: 0;
 }
+.page-item.active .page-link {
+    z-index: 1;
+    color: #fff;
+    background-color: #003c82;
+    border-color:  #003c82;
+}
+.page-item.active .page-link {
+    z-index: 1;
+    color: #fff;
+    background-color: #003c82;
+    border-color:  #003c82;
+}
+
 </style>

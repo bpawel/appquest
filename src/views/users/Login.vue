@@ -1,10 +1,6 @@
 <template>
 <b-modal id="myModal"  hide-footer centered title="Logowanie">
-        <ul class ="alert alert-danger" v-if="errors && errors.length ">
-                    <li v-for="error of errors" :key="error.id">
-                    {{error.message}}
-            </li>
-        </ul>
+      
     <form  @submit.prevent="login()">
        
     <div class="form-group">
@@ -37,7 +33,6 @@
     export default {
         data() {
             return {
-                errors:[],
                 user: {
                     email:'',
                     password:''
@@ -48,13 +43,11 @@
            async login() {
                try{
                   await this.$store.dispatch('login', this.user);
-                } catch(e) {
-                  this.errors.push(e);
+                } catch(error) {
+                  this.errors.push(error);
                 }
             }
         },
-        created: function () {
-        }
     }
 </script>
 <style scoped>

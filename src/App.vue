@@ -1,22 +1,21 @@
 <template>
   <div id="app">
-    <nav class="navbar navbar-expand-lg navbar-light bg-blue ">
+    <b-navbar class="navbar navbar-expand-lg navbar-light bg-blue ">
   
-  
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  
-  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-    <a class="navbar-brand" href="#">AppQuest</a>
-    <div class="navbar-nav ml-auto">
-      <b-link v-if="!isLogged"  v-b-modal.myModal class="nav-item nav-link active mr-3" >Zaloguj się<span class="sr-only">(current)</span></b-link>
-      <b-btn v-if="!isLogged" v-b-modal.register>Zarejestruj się</b-btn>
-      <Logout  v-if="isLogged"></Logout>
-       <b-link v-if="isLogged" class="nav-item nav-link active" ><WelcomeMessage></WelcomeMessage><span class="sr-only">(current)</span></b-link>
-    </div>
-  </div>
-</nav>
+  <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
+    
+    
+      <a class="navbar-brand" href="#">AppQuest</a>
+      <b-collapse is-nav id="nav_collapse">
+      <div class="navbar-nav ml-auto">
+        <b-link v-if="!isLogged"  v-b-modal.myModal class="nav-item nav-link active mr-3" >Zaloguj się<span class="sr-only">(current)</span></b-link>
+        <b-btn v-if="!isLogged" v-b-modal.register>Zarejestruj się</b-btn>
+        <Logout  v-if="isLogged"></Logout>
+        <b-link v-if="isLogged" class="nav-item nav-link active" ><WelcomeMessage></WelcomeMessage><span class="sr-only">(current)</span></b-link>
+      </div>
+    
+    </b-collapse>
+  </b-navbar>
      <router-view />
   </div>
 </template>
@@ -55,13 +54,13 @@ import { mapGetters } from 'vuex'
 
   .bg-blue{
     background-color: #003c82;
-    height: 100px;
     -webkit-box-shadow: -2px 9px 20px -9px rgba(0,0,0,0.75);
     -moz-box-shadow: -2px 9px 20px -9px rgba(0,0,0,0.75);
     box-shadow: -2px 9px 20px -9px rgba(0,0,0,0.75);
   }
   .navbar-light .navbar-brand {
     color: #fff;
+    margin-left:15%;
     
   }
   .navbar-light .navbar-nav .nav-link.active {

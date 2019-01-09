@@ -2,7 +2,7 @@
   <div class="home" id="home">
    <div class="container pt-5">
       <div class="row">
-        <div class="col-sm-7">
+        <div class="col-md-7">
           <div class="jumbotron">
             <h1 class="display-1 font-weight-bold">Witaj na stronie</h1>
             <p class="lead display-4">Ucz się i rozwiązuj testy online!!!</p>
@@ -38,12 +38,15 @@ export default {
 </script>
 
 <style scoped>
+.jumbotron {
+  height: 100vh;
+  padding: 14rem 2rem;
+}
 #home {
   background-image: url('../assets/start.jpg');
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
-  height: 89vh;
 }
 
 .btn{
@@ -75,7 +78,7 @@ export default {
 
 
 @media (min-width: 770px){
-div.col-sm-7 {
+div.col-md-7 {
     -webkit-box-flex: 0;
     -ms-flex: 0 0 58.3333333333%;
     flex: 0 0 58.3333333333%;

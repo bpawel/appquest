@@ -77,9 +77,9 @@ const store = new Vuex.Store({
     },
     
     logout({commit}) {
-                localStorage.removeItem('token');
-                commit(types.LOGOUT);
-                router.push({path: '/'});
+      localStorage.removeItem('token');
+      commit(types.LOGOUT);
+      router.push({path: '/'});
     }
 }
 });

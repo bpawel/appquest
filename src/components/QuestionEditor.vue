@@ -6,13 +6,12 @@
         <i></i>
          <div  class="mt-3 mb-3">
             <h4>Typ Testu: </h4>
-            <b-form-select v-model="question.type" :options="options" />
+            <b-form-select v-model="question.type" :options="options" placeholder="Wybierz typ testu" />
           </div>
         <input placeholder="Wprowadź pytanie"  class="form-control"  v-model="question.questionName" />
         <AnswerEditor v-bind:answers="question.answers"></AnswerEditor>
         <button  class="btn btn-primary btn-xs mt-3" @click="add(index)">Dodaj Pytanie</button>
         <button class="btn btn-danger btn-xs ml-3 mt-3" @click="remove(index)">Usuń Pytanie</button>
-         <span>Checked names: {{ question.answers.validAnswers }}</span>
     </b-card>
     
 </div>
@@ -36,7 +35,7 @@ export default {
         return {
         selected: null,
         options: [
-          { value: null, text: 'Please select type' },
+          { value:  null, text: 'Wybierz typ testu' },
           { value: 'open', text: 'open' },
           { value: 'closed', text: 'closed' },
           { value: 'true/false', text: 'true/false' },

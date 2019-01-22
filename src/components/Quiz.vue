@@ -33,12 +33,16 @@
 </template>
 
 <script>
-import Questions from './Questions.vue'
-const quizData = 'https://api.myjson.com/bins/c1d1a';
+import Questions from './Questions.vue';
+import axios from "axios";
+
+import { mapState } from "vuex";
+
 export default {
 components: {
     Questions,
 },
+props: ['id'],
 data() {
     return {
       introStage:false,
@@ -64,17 +68,27 @@ data() {
       }
     }
   },
-  created() {    
-    fetch(quizData)
-    .then(res => res.json())
-    .then(res => {
-      this.title = res.title;
-      this.questions = res.questions;
-      this.introStage = true;
-    })
+  async created() {    
+    await this.getQuizData();
+    // console.log(this.id);
+    // fetch(quizData)
+    // .then(res => res.json())
+    // .then(res => {
+    //   this.title = res.title;
+    //   this.questions = res.questions;
+    //   this.introStage = true;
+    // })
   
   },
   methods:{
+    async getQuizData() {
+        let response = await axios.get(
+          `http://localhost:3000/v1/quiz/${this.id}`
+        );
+      this.title = response.data.name;
+      this.questions = response.data.question;
+      this.introStage = true;
+    },
     startQuiz() {
       this.introStage = false;
       this.questionStage = true;

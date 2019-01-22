@@ -1,127 +1,120 @@
 <template>
-
-   <div class="class" id="class">
-   <div class="container">
+  <div class="class" id="class">
+    <div class="container">
       <div class="row">
-        <div  class="col-md-8 col-table">
-            <ul class ="alert alert-danger" v-if="errors && errors.length ">
-                <li v-for="error of errors" :key="error.id">
-                {{error.message}}
-            </li>
-            </ul>
-        <h2>Klasy</h2>
-        <i></i>
-          <div v-for="groups in list" :key="groups.id" class="mb-3">
-          <b-card>
-            <h5 class="card-title">{{groups.name}}</h5>
-            <p>{{groups.description}}</p>
-            <h6 class="card-subtitle mb-2 text-muted">Wykładowca: {{groups.instructor}}</h6>
-            <h6 class="card-subtitle mb-2 text-muted">quiz: {{groups.quiz}}</h6>
-            <hr class=" mb-5">
-            Wybierz Test i zapisz do Klasy:
-            <select id="isQuiz"  @change="onchange()"  v-model="groups.quiz" class="form-control form-control-sm">
-                <option for="isQuiz" v-for="quizzes in listQuiz" :key="quizzes.id">{{quizzes.name}}</option>
-            </select>
-        <button  v-on:click="addQuiz(groups)" class="btn btn-success mt-5 mb-5">Dodaj Test do Klasy</button>
+        <div class="col-md-8 col-table">
+          <ul class="alert alert-danger" v-if="errors && errors.length ">
+            <li v-for="error of errors" :key="error.id">{{error.message}}</li>
+          </ul>
+          <h2>Klasy</h2>
+          <i></i>
+          <div v-for="clazz in classes" :key="clazz.id" class="mb-3">
+            <b-card>
+              <h5 class="card-title">{{clazz.name}}</h5>
+              <p>{{clazz.description}}</p>
+              <p>Quiz:</p>
+                <b-form-select v-model="clazz.quiz" class="mb-3">
+                  <option :value="quiz.id" v-for="quiz in quizes" :key="quiz.id">{{quiz.name}}</option>
+                </b-form-select>
+              <button v-on:click="save(clazz)" class="btn btn-success mt-5 mb-5">Zapisz</button>
             </b-card>
           </div>
         </div>
-        
+
         <div class="col-md-3 wrap">
-            <ActionLinks v-bind:actions="actions"></ActionLinks>
+          <ActionLinks v-bind:actions="actions"></ActionLinks>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
-import axios from 'axios'
+import axios from "axios";
 
-import WelcomeMessage from '../../welcome/WelcomeMessage.vue'
-import ActionLinks from '../../links/ActionLinks.vue'
-import Logout from '../../../components/Logout.vue'
-import { mapState } from 'vuex' 
- 
- 
+import WelcomeMessage from "../../welcome/WelcomeMessage.vue";
+import ActionLinks from "../../links/ActionLinks.vue";
+import Logout from "../../../components/Logout.vue";
+import { mapState } from "vuex";
 
 export default {
-    
-    components: {
-      WelcomeMessage,
-      ActionLinks,
-      Logout,
-    },
-  data () {
-
+  components: {
+    WelcomeMessage,
+    ActionLinks,
+    Logout
+  },
+  data() {
     return {
-        actions: [
-            {label: 'Moje Klasy', link: 'listClassesInstructor'},
-            {label: 'Moje Testy', link: 'listQuizzesInstructor'},
-            {label: 'Stwórz Klase', link: 'createClass'},
-            {label: 'Stwórz Test', link: 'createQuiz'},
-        ],
-        list:[],
-        listQuiz:[],
-        selected: [],
-        group: {
-          id: '',
-          name: '',
-          description: '',
-          instructor: '',
-          quiz: [],
-        },
-        quiz: [],
-        errors: [],
-        }
-    },
-    created () {
-        this.getGroup();
-        this.getQuiz();
-    },
-    methods: {
+      actions: [
+        { label: "Moje Klasy", link: "listClassesInstructor" },
+        { label: "Moje Testy", link: "listQuizzesInstructor" },
+        { label: "Stwórz Klase", link: "createClass" },
+        { label: "Stwórz Test", link: "createQuiz" }
+      ],
+      classes: [],
+      quizes: [],
+      // selected: [],
+      // group: {
+      //   id: "",
+      //   name: "",
+      //   description: "",
+      //   instructor: "",
+      //   quiz: null
+      // },
+      // quiz: null,
+      // errors: []
+    };
+  },
+  created() {
+    this.getClasses();
+    this.getQuizes();
+  },
+  methods: {
     onchange: function() {
-         try {  
-                let groups = this.group.quiz;
-                this.groups.push(this.quiz.name);       
-            } catch(e)
-            {
-                console.log(e);
-            }
-    	console.log([this.group.quiz])
+      try {
+        let clazz = this.group.quiz;
+        this.clazz.push(this.quiz.name);
+      } catch (e) {
+        console.log(e);
+      }
+      console.log([this.group.quiz]);
     },
- 
-        async  getGroup() {
-           try {
-               let ID = this.$store.state.user.id;
-               let group = await axios.get(`http://localhost:3000/v1/class?instructor=${ID}`, );
-               this.list = group.data;
-           } catch (errors) {
-               this.errors.push(errors)
-           }
-       },
-       async  getQuiz() {
-           try {
-               let ID = this.$store.state.user.id;
-               let quiz = await axios.get(`http://localhost:3000/v1/quiz?instructor=${ID}`, );
-               this.listQuiz = quiz.data;
-           } catch (errors) {
-               this.errors.push(errors)
-           }
-           
-       },
-        async addQuiz(group){
-        try{
-            await axios.put("http://localhost:3000/v1/class/" + group.id,  {
-                    quiz: this.quiz.name,
-            });
-             //this.group.quiz = this.quiz.name;
-        }catch(e) {
-          //console.log(user);
-          this.errors.push(e);
+
+    async getClasses() {
+      try {
+        let ID = this.$store.state.user.id;
+        let group = await axios.get(
+          `http://localhost:3000/v1/class?instructor=${ID}`
+        );
+        this.classes = group.data;
+      } catch (errors) {
+        this.errors.push(errors);
       }
     },
+    async getQuizes() {
+      try {
+        let ID = this.$store.state.user.id;
+        let quiz = await axios.get(
+          `http://localhost:3000/v1/quiz?instructor=${ID}`
+        );
+        this.quizes = quiz.data;
+      } catch (errors) {
+        this.errors.push(errors);
+      }
     },
-}
+    async save(clazz) {
+      try {
+        console.log(clazz);
+        await axios.put(`http://localhost:3000/v1/class/${clazz.id}`, {
+          quiz: clazz.quiz
+        });
+        //this.group.quiz = this.quiz.name;
+      } catch (e) {
+        //console.log(user);
+        this.errors.push(e);
+      }
+    }
+  }
+};
 </script>
 <style scoped>
 .col-table {

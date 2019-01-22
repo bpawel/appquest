@@ -49,8 +49,8 @@ export default {
            {label: 'Statystyki', link: 'resultDashboard'},
         ],
         list:[],
-        fields: [ 
-          '_id', 'name', 'show_details', 'test', ],
+        // fields: [ 
+        //   '_id', 'name', 'show_details', 'test', ],
         group: {
           id: '',
           name: '',
@@ -58,7 +58,7 @@ export default {
           instructor: '',
           users: [],
         },
-        errors: []   
+        // errors: []   
         }
     },
     created () {

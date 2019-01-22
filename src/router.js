@@ -104,9 +104,10 @@ export default new Router({
       component: Class,
     },
     {
-      path: '/quizDashboard',
-      name: 'quizDashboard',
+      path: '/quiz/:id',
+      name: 'quiz',
       component: QuizDashboard,
+      props: true,
     },
     {
       path: '/resultDashboard',

@@ -4,7 +4,7 @@
       <div class="row">
         <div  class="col-md-8 col-table">
       
-        <chartjs-bar :datalabel="'Statystyki[%]'" :labels="['12.10.2018','20.10.2018','22.10.2018']" :data="[100,40,60]"></chartjs-bar> 
+        <chartjs-bar :datalabel="'Statystyki[%]'" :labels="['Test123, 12.10.2018','Test, 20.10.2018','Quiz, 22.10.2018']" :data="[100,40,60]"></chartjs-bar> 
         </div>
         <div class="col-md-3 wrap">
             <ActionLinks v-bind:actions="actions"></ActionLinks>

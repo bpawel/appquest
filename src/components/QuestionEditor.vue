@@ -36,10 +36,10 @@ export default {
         selected: null,
         options: [
           { value:  null, text: 'Wybierz typ testu' },
-          { value: 'open', text: 'open' },
-          { value: 'closed', text: 'closed' },
-          { value: 'true/false', text: 'true/false' },
-          { value: 'multiple', text: 'multiple' }
+          { value: 'open', text: 'otwarte' },
+          { value: 'closed', text: 'zamknięte' },
+          { value: 'true/false', text: 'prawda/fałsz' },
+          { value: 'multiple', text: 'wielokrotnego wyboru' }
         ]
         }
     },

@@ -1,6 +1,6 @@
 <template>
 <div>
-     Welcome Back {{user.email}}
+     Witaj, {{user.email}}
 </div>
     
 </template>

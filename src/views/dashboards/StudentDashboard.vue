@@ -10,12 +10,14 @@
             </ul>
         <h2>Klasy</h2>
         <i></i>
-          <div v-for="groups in list" :key="groups.id" class="mb-3">
+          <div v-for="clazz in classes" :key="clazz.id" class="mb-3">
           <b-card>
-            <h5 class="card-title">{{groups.name}}</h5>
-            <p>{{groups.description}}</p>
-            <h6 class="card-subtitle mb-2 text-muted">Wykładowca: {{groups.instructor}}</h6>
-             <button  v-on:click="Test()" class="btn btn-success mt-3">Test</button>
+            <h5 class="card-title">{{clazz.name}}</h5>
+            <p>{{clazz.description}}</p>
+            <h6 class="card-subtitle mb-2 text-muted">Wykładowca: {{clazz.instructor}}</h6>
+                <router-link :to="{ name: 'quiz', params: { id: clazz.quiz }}"><button class="btn btn-success mt-3">Quiz</button></router-link>
+
+             
             </b-card>
             
           </div>
@@ -48,7 +50,7 @@ export default {
             {label: 'Dołącz do klasy', link: 'class'},
             {label: 'Statystyki', link: 'resultDashboard'},
         ],
-        list:[],
+        classes:[],
         group: {
             id: '',
             name: '',
@@ -71,7 +73,7 @@ export default {
            try {
                let ID = this.$store.state.user.id;
                let group = await axios.get(`http://localhost:3000/v1/class?users=${ID}`);
-               this.list = group.data;
+               this.classes = group.data;
            } catch (e) {
                this.errors.push(e)
            }

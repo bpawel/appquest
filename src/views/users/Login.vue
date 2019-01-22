@@ -11,7 +11,7 @@
                 class="form-control" 
                 id="email" 
                 aria-describedby="emailHelp" 
-                placeholder="Wprowadź email" required>
+                placeholder="Wprowadź email" required autofocus>
     </div>
     <div class="form-group">
         <label for="password">Hasło: </label>

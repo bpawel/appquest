@@ -2,22 +2,16 @@
 
 <div class="container mt-5">
   <div class="row justify-content-center">
-    <b-card class=" cad-body col-md-6 mt-5">
+    <b-card class="col-md-7 mt-5">
     <Quiz :id="quizId">
-
-    <!-- <div slot="intro" slot-scope="props">
-       {{props.title}}
-    </div> -->
-  
-    <div slot="results" slot-scope="props">
-      <h1>GRATULACJE!</h1> 
-         {{props.correct}} / {{props.length}} questions. 
-        Twój wynik:  {{props.perc}}%.
+    <div class="text-center" slot="results" slot-scope="props">
+        <b> {{props.correct}} / {{props.length}}</b> odpowiedzi poprawne. 
+        Twój wynik: <b> {{props.perc}}%</b>.
     </div>
   </Quiz>
-</b-card>
+  </b-card>
+   
   </div>
-  
 </div>
 
 </template>
@@ -25,6 +19,7 @@
 <script>
 
 import Quiz from '../../components/Quiz.vue'
+
 
 export default {
   components: {

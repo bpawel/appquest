@@ -1,20 +1,31 @@
 <template>
 <div>
-  <strong>Question:</strong><br/>
-  <strong>{{ question.text }} </strong>
+  <p><strong>{{ question.questionName }} </strong></p>
 
-  <div v-if="question.type === 'tf'">
-    <input type="radio" name="currentQuestion" id="trueAnswer" v-model="answer" value="t"><label for="trueAnswer">True</label><br/>
-    <input type="radio" name="currentQuestion" id="falseAnswer" v-model="answer" value="f"><label for="falseAnswer">False</label><br/>
-  </div>
-
-  <div v-if="question.type === 'mc'">
-    <div v-for="(mcanswer,index) in question.answers" :key="index.id">
-    <input type="radio" :id="'answer'+index" name="currentQuestion" v-model="answer" :value="mcanswer"><label :for="'answer'+index">{{mcanswer}}</label><br/>
+  <div v-if="question.type === 'true/false'">
+    <div v-for="(trueFalseAnswer,index) in question.answers" :key="question.id">
+    <input type="radio" :id="'answer'+index" name="currentQuestion" v-model="answer" :value="trueFalseAnswer"> <label :for="'answer'+index"> {{trueFalseAnswer.nameAnswer}}</label><br/>
     </div>
   </div>
 
-  <button class="btn btn-success" @click="submitAnswer">Next</button>
+  <div v-if="question.type === 'closed'">
+    <div v-for="(closedQuestionAnswer,index) in question.answers" :key="question.id">
+    <input type="radio" :id="'answer'+index" name="currentQuestion" v-model="answer" :value="closedQuestionAnswer"> <label :for="'answer'+index"> {{closedQuestionAnswer.nameAnswer}}</label><br/>
+    </div>
+  </div>
+
+  <div v-if="question.type === 'open'">
+    <label :for="'answer'"> Twoja odpowiedź: </label> <input type="text" :id="'answer'" name="currentQuestion" v-model="answer"> <br/>
+  </div>
+
+  <div v-if="question.type === 'multiple'">
+    <div v-for="(multipleChoiceAnswer,index) in question.answers" :key="question.id">
+    <input type="checkbox" :id="'answer'+index" name="currentQuestion" 
+  v-model="answers[index]" :value="multipleChoiceAnswer"> <label :for="'answer'+index"> {{multipleChoiceAnswer.nameAnswer}}</label><br/>
+    </div>
+  </div>
+</br>
+  <button :disabled="answer === null && answers.length === 0" class="btn btn-success" @click="submitAnswer">Dalej</button>
 </div>
 </template>
 
@@ -23,14 +34,16 @@
 export default {
 data() {
      return {
-       answer:'',
+       answer: null,
+       answers: [],
      }
   },
   props:['question','question-number'],
 	methods:{
 		submitAnswer:function() {
-			this.$emit('answer', {answer:this.answer});
+			this.$emit('answer', {answer:this.answer, questionType: this.question.type, answers: this.answers});
       this.answer = null;
+      this.answers = [];
 		}
 	}
 }

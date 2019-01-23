@@ -2,10 +2,10 @@
 <div>
   <div v-if="introStage">
     <slot name="intro" :title="title">
-    <h1>Witaj w quzie: {{title}}</h1>
-    <p>
-      LOREM IPSUM.
-    </p>    
+    <h1>Witaj w quzie:</h1>
+    <h3>
+       {{title}}
+    </h3>    
     </slot>
     <button class="btn btn-success mb-5" @click="startQuiz">START!</button>
   </div>
@@ -19,6 +19,7 @@
   </div>
   
   <div v-if="resultsStage">
+    <h1 class="text-center">GRATULACJE!</h1> 
       <chartjs-doughnut 
                     v-bind:labels="labels"
                     v-bind:datasets="datasets"
@@ -28,14 +29,15 @@
     You got {{correct}} right out of {{questions.length}} questions. Your percentage is {{perc}}%.
     
     </slot>
+     <b-button  class="btn btn-primary btn-xs mt-3" href="/studentDashboard" >Zakończ</b-button>
   </div>
 </div>
+
 </template>
 
 <script>
 import Questions from './Questions.vue';
 import axios from "axios";
-
 import { mapState } from "vuex";
 
 export default {
@@ -51,33 +53,25 @@ data() {
       title:'',
       questions:[],
       currentQuestion:0,
-      answers:[],
+      userChoices:[],
       correct:0,
       perc:null,
-      labels: ["dobrze", "źle"],
+      labels: ["poprawne", "niepoprawne"],
       datasets: [{
-           data: [40,60],
+           data: [],
            backgroundColor: ["Blue", "Red"],
       }],
       option: {
           title: {
               display: true,
               position: "bottom",
-              text: this.perc,
+              text: 'Podsumowanie odpowiedzi',
           }
       }
     }
   },
   async created() {    
     await this.getQuizData();
-    // console.log(this.id);
-    // fetch(quizData)
-    // .then(res => res.json())
-    // .then(res => {
-    //   this.title = res.title;
-    //   this.questions = res.questions;
-    //   this.introStage = true;
-    // })
   
   },
   methods:{
@@ -95,7 +89,7 @@ data() {
     },
     handleAnswer(e) {
       console.log(e);
-      this.answers[this.currentQuestion]=e.answer;
+      this.userChoices[this.currentQuestion]=e || {};
       if((this.currentQuestion+1) === this.questions.length) {
         this.handleResults();
         this.questionStage = false;
@@ -107,9 +101,36 @@ data() {
     handleResults() {
       console.log('handle results');
       this.questions.forEach((a, index) => {
-        if(this.answers[index] === a.answer) this.correct++;        
+        if (a.type === 'multiple') {
+          let validAnswers = [];
+          let userAnswers = [];
+          for (let answer of a.answers) {
+              if (answer.validAnswer.length > 0) {
+                validAnswers.push(a.answers.indexOf(answer));
+              }
+          }
+          for (let answerIndex of Object.keys(this.userChoices[index].answers)) {
+            if (this.userChoices[index].answers[answerIndex] === true) {
+              userAnswers.push(answerIndex);
+            }
+          }
+
+          if (validAnswers.join(';') === userAnswers.join(';')) {
+            this.correct++;
+          }
+        } else if (a.type === 'open') {
+          if (a.answers[0] && a.answers[0].validAnswer[0] === this.userChoices[index].answer) {
+            this.correct++;
+          }
+        } else {
+          console.log(this.userChoices[index])
+          if (this.userChoices[index].answer.validAnswer.length > 0) {
+            this.correct++;
+          }
+        }      
       });
       this.perc = ((this.correct / this.questions.length)*100).toFixed(2);
+      this.datasets[0].data = [this.perc, 100 - this.perc];
       console.log(this.correct+' '+this.perc);
     }
   }

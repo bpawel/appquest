@@ -24,7 +24,7 @@
                 placeholder="Wprowadź hasło" required>
     </div>
     <button type="submit" class="btn btn-primary">Zaloguj się</button>
-    <router-link to="/forgot-password">Zapomniałeś hasło?</router-link>
+    <router-link to="/forgot-password">Nie pamiętam hasła</router-link>
     </form>
 </b-modal>
 </template>

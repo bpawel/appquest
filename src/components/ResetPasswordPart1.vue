@@ -8,11 +8,11 @@
             <div v-if="errorMessage" class="alert alert-danger" role="alert">
               {{ errorMessage }}
             </div>
-            <form  @submit.prevent="">
+            <form  @submit.prevent="" v-if="!successMessage">
                 <div class="form-group">
                     <label>Nowe Hasło: </label>
                     <input
-                    v-model="user.password"
+                    v-model="password"
                     type="password"
                     class="form-control"
                     
@@ -23,7 +23,7 @@
                 <div class="form-group">
                     <label >Potwierdź nowe hasło: </label>
                     <input
-                    v-model="user.password2"
+                    v-model="password2"
                     type="password"
                     class="form-control"
                     
@@ -33,6 +33,7 @@
                 </div>
                 <button v-on:click="resetPassword()" class="btn btn-primary">OK</button>
             </form>
+            <div v-if="successMessage">{{successMessage}}</div>
         </div>
   </b-card>
 </div>
@@ -41,6 +42,7 @@
 <script>
 import Joi from 'joi';
 import router from '../router'
+import axios from 'axios';
 const schema = {
   email: Joi.string().email().required(),
   password: Joi.string().min(6).max(128).required(),
@@ -51,40 +53,39 @@ export default {
  data() {
     return {
       errorMessage: '',
-      user: {
-        password: '',
-        password2: '',
-        resetPassword:''
-      }
+      password: null,
+      password2: null,
+      errors: [],
+      successMessage: '',
     }
   },  
   methods: {
    
   async resetPassword() {
     if(this.validUser()) {
+        this.errorMessage = null;
     try{
-      await axios.post("http://localhost:3000/v1/auth/reset-password?token=" + this.$store.state.user.resetPassword,  {
-          password: this.user.password,
-          password2: this.user.password2,
+      const res = await axios.post("http://localhost:3000/v1/auth/reset-password?token=" + this.$route.query.token,  {
+          password: this.password
       });
-      console.log(this.$store.state.user.resetPassword);
-      user.password = '';
-      user.password2 = '';
+      console.log(this.$route.query.token);
+      this.password = '';
+      this.password2 = '';
+      this.successMessage = res.data.message || '';
       // router.push({path: '/'});
       }catch(e) {
-      //console.log(user);
-      this.errors.push(e);
+      this.errorMessage = e.response.data.message || e;
       }
     }
         
     },
     validUser() {
-      if (this.user.password !== this.user.password2) {
+      if (this.password !== this.password2) {
         this.errorMessage = 'Password must match.';
-        console.log(this.$store.state.user.resetPassword);
+        console.log(this.$route.query.token);
         return false;
       }
-     
+     return true;
     },
   },
    created: function () {

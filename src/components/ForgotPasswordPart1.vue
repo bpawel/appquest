@@ -40,9 +40,7 @@ import router from '../router'
                         email: this.user.email,
                 });
                     user.email = '';
-                // router.push({path: '/'});
-                }catch(e) {
-                    //console.log(user);
+                }catch(e) { 
                     this.errors.push(e);
                 }
             },

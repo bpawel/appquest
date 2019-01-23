@@ -67,7 +67,8 @@ data() {
               position: "bottom",
               text: 'Podsumowanie odpowiedzi',
           }
-      }
+      },
+      quiz: {}
     }
   },
   async created() {    
@@ -82,23 +83,24 @@ data() {
       this.title = response.data.name;
       this.questions = response.data.question;
       this.introStage = true;
+      this.quiz = response.data;
     },
     startQuiz() {
       this.introStage = false;
       this.questionStage = true;
     },
-    handleAnswer(e) {
+    async handleAnswer(e) {
       console.log(e);
       this.userChoices[this.currentQuestion]=e || {};
       if((this.currentQuestion+1) === this.questions.length) {
-        this.handleResults();
+        await this.handleResults();
         this.questionStage = false;
         this.resultsStage = true;
       } else {
         this.currentQuestion++;
       }
     },
-    handleResults() {
+    async handleResults() {
       console.log('handle results');
       this.questions.forEach((a, index) => {
         if (a.type === 'multiple') {
@@ -132,6 +134,12 @@ data() {
       this.perc = ((this.correct / this.questions.length)*100).toFixed(2);
       this.datasets[0].data = [this.perc, 100 - this.perc];
       console.log(this.correct+' '+this.perc);
+         await axios.post("http://localhost:3000/v1/quiz-result/" ,  {
+              quiz: this.quiz.id,
+              correctAnswersCount: this.correct,
+              questionsCount: this.questions.length,
+            });
+            // console.log(quiz.type)
     }
   }
   

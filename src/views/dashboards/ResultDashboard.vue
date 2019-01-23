@@ -4,7 +4,7 @@
       <div class="row">
         <div  class="col-md-8 col-table">
       
-        <chartjs-bar :datalabel="'Statystyki[%]'" :labels="['Test123, 12.10.2018','Test, 20.10.2018','Quiz, 22.10.2018']" :data="[100,40,60]"></chartjs-bar> 
+        <chartjs-bar v-if="done" :datalabel="'Statystyki wyników testów [%]'" :labels="chartLabels" :data="chartValues" ></chartjs-bar> 
         </div>
         <div class="col-md-3 wrap">
             <ActionLinks v-bind:actions="actions"></ActionLinks>
@@ -42,22 +42,29 @@ export default {
             instructor: '',
             users:'',
         },
-        errors: []   
+        chartLabels: [],
+        chartValues: [],
+        errors: [],
+        done: false,
         }
     },
-    created () {
-        this.getGroup();
+    async created () {
+        await this.getResults();
+        this.done = true;
     },
         
     methods: {
-       Test() {
-           router.push({path: '/quizDashboard'});
-       },
-       async getGroup() {
+       async getResults() {
            try {
-               let ID = this.$store.state.user.id;
-               let group = await axios.get(`http://localhost:3000/v1/class?users=${ID}`);
-               this.list = group.data;
+               let res = await axios.get(`http://localhost:3000/v1/quiz-result?user=${this.$store.state.user.id}`);
+               this.list = res.data;
+            //    console.log('asd')
+               for (let result of this.list) {
+                   this.chartLabels.push([result.quiz.name, result.createdAt]);
+                   this.chartValues.push(result.correctAnswersCount / result.questionsCount * 100);
+                   console.log(`${result.quiz.name} ${result.createdAt}`)
+                   console.log(result.correctAnswersCount / result.questionsCount);
+               }
            } catch (e) {
                this.errors.push(e)
            }

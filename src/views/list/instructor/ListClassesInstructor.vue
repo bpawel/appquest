@@ -107,9 +107,7 @@ export default {
         await axios.put(`http://localhost:3000/v1/class/${clazz.id}`, {
           quiz: clazz.quiz
         });
-        //this.group.quiz = this.quiz.name;
       } catch (e) {
-        //console.log(user);
         this.errors.push(e);
       }
     }

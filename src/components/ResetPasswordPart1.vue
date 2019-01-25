@@ -72,7 +72,6 @@ export default {
       this.password = '';
       this.password2 = '';
       this.successMessage = res.data.message || '';
-      // router.push({path: '/'});
       }catch(e) {
       this.errorMessage = e.response.data.message || e;
       }

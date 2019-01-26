@@ -83,7 +83,7 @@ export default {
       try {
         let ID = this.$store.state.user.id;
         let group = await axios.get(
-          `http://localhost:3000/v1/class?instructor=${ID}`
+          `${process.env.VUE_APP_HOST}/class?instructor=${ID}`
         );
         this.classes = group.data;
       } catch (errors) {
@@ -94,7 +94,7 @@ export default {
       try {
         let ID = this.$store.state.user.id;
         let quiz = await axios.get(
-          `http://localhost:3000/v1/quiz?instructor=${ID}`
+          `${process.env.VUE_APP_HOST}/quiz?instructor=${ID}`
         );
         this.quizes = quiz.data;
       } catch (errors) {
@@ -104,7 +104,7 @@ export default {
     async save(clazz) {
       try {
         console.log(clazz);
-        await axios.put(`http://localhost:3000/v1/class/${clazz.id}`, {
+        await axios.put(`${process.env.VUE_APP_HOST}/class/${clazz.id}`, {
           quiz: clazz.quiz
         });
       } catch (e) {

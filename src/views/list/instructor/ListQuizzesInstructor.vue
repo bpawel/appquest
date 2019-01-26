@@ -66,7 +66,7 @@ export default {
        async getQuiz() {
            try {
                let ID = this.$store.state.user.id;
-               let quiz = await axios.get(`http://localhost:3000/v1/quiz?instructor=${ID}`,);
+               let quiz = await axios.get(`${process.env.VUE_APP_HOST}/quiz?instructor=${ID}`,);
                this.list = quiz.data;
            } catch (e) {
                this.errors.push(e)

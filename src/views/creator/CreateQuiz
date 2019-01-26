@@ -136,7 +136,7 @@ export default {
 
     async createQuiz(quiz){
       try{
-         await axios.post("http://localhost:3000/v1/quiz/" ,  {
+         await axios.post("${process.env.VUE_APP_HOST}/quiz/" ,  {
               name: quiz.name,
               type: quiz.type,
               question: [{

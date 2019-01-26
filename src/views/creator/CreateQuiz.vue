@@ -85,7 +85,7 @@ export default {
      
     async createQuiz(quiz, question){
       try{
-        let add = await axios.post("http://localhost:3000/v1/quiz/" ,  {
+        let add = await axios.post(`${process.env.VUE_APP_HOST}/quiz/` ,  {
               name: quiz.name,
               type: question.type,
               question: this.question,

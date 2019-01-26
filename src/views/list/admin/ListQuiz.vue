@@ -143,7 +143,7 @@ export default {
     methods: {
        async getQuizzes(){
         try{
-            let quiz = await axios.get("http://localhost:3000/v1/quiz");
+            let quiz = await axios.get(`${process.env.VUE_APP_HOST}/quiz`);
             this.quiz = quiz.data;
 
         }catch(e) {
@@ -153,7 +153,7 @@ export default {
       async deleteQuiz(id) {
         try{
          
-           await axios.delete("http://localhost:3000/v1/quiz/" + id);
+           await axios.delete(`${process.env.VUE_APP_HOST}/quiz/` + id);
            this.getQuizzes();
         }catch(e) {
             this.errorsMessage.push(e);
@@ -172,7 +172,7 @@ export default {
 
     editQuiz(quiz){
       try{
-            axios.put("http://localhost:3000/v1/quiz/" + quiz.id,  {
+            axios.put(`${process.env.VUE_APP_HOST}/quiz/` + quiz.id,  {
               name: quiz.name,
             });
            

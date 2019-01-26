@@ -68,7 +68,7 @@ export default {
     methods: {
        async getGroup() {
            try {
-               let group = await axios.get('http://localhost:3000/v1/class',);
+               let group = await axios.get(`${process.env.VUE_APP_HOST}/class`,);
                this.list = group.data;
            } catch (e) {
                this.errors.push(e)
@@ -76,7 +76,7 @@ export default {
        },
       async addUser(group){
           try{
-                await axios.put("http://localhost:3000/v1/class/" + group.id,  {
+                await axios.put(`${process.env.VUE_APP_HOST}/class/` + group.id,  {
                 users: this.$store.state.user.id,
                 });
               router.push({path: '/studentDashboard'});

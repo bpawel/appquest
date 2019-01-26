@@ -143,7 +143,7 @@ export default {
     methods: {
        async getGroups(){
         try{
-            let group = await axios.get("http://localhost:3000/v1/class");
+            let group = await axios.get(`${process.env.VUE_APP_HOST}/class`);
             this.group = group.data;
 
         }catch(e) {
@@ -153,7 +153,7 @@ export default {
       async deleteGroup(id) {
         try{
           console.log(id);
-           await axios.delete("http://localhost:3000/v1/class/" + id);
+           await axios.delete(`${process.env.VUE_APP_HOST}/class/` + id);
            this.getGroups();
         }catch(e) {
             this.errorsMessage.push(e);
@@ -172,7 +172,7 @@ export default {
 
     editGroup(group){
       try{
-            axios.put("http://localhost:3000/v1/class/" + group.id,  {
+            axios.put(`${process.env.VUE_APP_HOST}/class/` + group.id,  {
               name: group.name,
             });
            

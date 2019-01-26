@@ -65,7 +65,7 @@ export default {
     if(this.validUser()) {
         this.errorMessage = null;
     try{
-      const res = await axios.post("http://localhost:3000/v1/auth/reset-password?token=" + this.$route.query.token,  {
+      const res = await axios.post(`${process.env.VUE_APP_HOST}/auth/reset-password?token=` + this.$route.query.token,  {
           password: this.password
       });
       console.log(this.$route.query.token);

@@ -72,7 +72,7 @@ export default {
        async getGroup() {
            try {
                let ID = this.$store.state.user.id;
-               let group = await axios.get(`http://localhost:3000/v1/class?users=${ID}`);
+               let group = await axios.get(`${process.env.VUE_APP_HOST}/class?users=${ID}`);
                this.classes = group.data;
            } catch (e) {
                this.errors.push(e)

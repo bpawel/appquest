@@ -56,7 +56,7 @@ export default {
     methods: {
        async getResults() {
            try {
-               let res = await axios.get(`http://localhost:3000/v1/quiz-result?user=${this.$store.state.user.id}`);
+               let res = await axios.get(`${process.env.VUE_APP_HOST}/quiz-result?user=${this.$store.state.user.id}`);
                this.list = res.data;
             //    console.log('asd')
                for (let result of this.list) {

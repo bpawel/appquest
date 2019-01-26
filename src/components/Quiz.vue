@@ -78,7 +78,7 @@ data() {
   methods:{
     async getQuizData() {
         let response = await axios.get(
-          `http://localhost:3000/v1/quiz/${this.id}`
+          `${process.env.VUE_APP_HOST}/quiz/${this.id}`
         );
       this.title = response.data.name;
       this.questions = response.data.question;
@@ -134,7 +134,7 @@ data() {
       this.perc = ((this.correct / this.questions.length)*100).toFixed(2);
       this.datasets[0].data = [this.perc, 100 - this.perc];
       console.log(this.correct+' '+this.perc);
-         await axios.post("http://localhost:3000/v1/quiz-result/" ,  {
+         await axios.post(`${process.env.VUE_APP_HOST}/quiz-result/` ,  {
               quiz: this.quiz.id,
               correctAnswersCount: this.correct,
               questionsCount: this.questions.length,

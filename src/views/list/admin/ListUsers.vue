@@ -156,7 +156,7 @@ export default {
     methods: {
        async getUsers(){
         try{
-            let user = await axios.get("http://localhost:3000/v1/users");
+            let user = await axios.get(`${process.env.VUE_APP_HOST}/users`);
             this.user = user.data;
 
         }catch(e) {
@@ -166,7 +166,7 @@ export default {
       async deleteUser(id) {
         try{
           console.log(id);
-           await axios.delete("http://localhost:3000/v1/users/" + id);
+           await axios.delete(`${process.env.VUE_APP_HOST}/users/` + id);
            this.getUsers();
         }catch(e) {
             this.errors.push(e);
@@ -188,7 +188,7 @@ export default {
     editUser(user){
       try{
         //console.log(id);
-            axios.patch("http://localhost:3000/v1/users/" + user.id,  {
+            axios.patch(`${process.env.VUE_APP_HOST}/users/` + user.id,  {
               role: user.role,
               email:  user.email,
             });

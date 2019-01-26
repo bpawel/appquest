@@ -51,7 +51,7 @@ const store = new Vuex.Store({
 },
   actions: {
     login ({commit, state}, credential) {
-        Vue.http.post('http://localhost:3000/v1/auth/login', credential)
+        Vue.http.post(`${process.env.VUE_APP_HOST}/auth/login`, credential)
             .then((response) =>  response.json())
             .then((result) => {
                 commit(types.LOGIN, {
@@ -67,7 +67,7 @@ const store = new Vuex.Store({
     },
 
     register ({ commit }, credential) {
-      Vue.http.post('http://localhost:3000/v1/auth/register', credential)
+      Vue.http.post(`${process.env.VUE_APP_HOST}/auth/register`, credential)
           .then((response) =>  response.json())
           .then((result) => {
               localStorage.setItem('token', JSON.stringify(result.token));

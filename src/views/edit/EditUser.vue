@@ -37,7 +37,7 @@ import axios from 'axios'
         methods: {
            async saveUser() {
                try {
-                   await axios.put('http://localhost:3000/v1/users/' + this.user.id);
+                   await axios.put(`${process.env.VUE_APP_HOST}/users/` + this.user.id);
                    this.$router.push({path: '/users'}); 
                } catch(e) {
                    this.errors.push(e);
@@ -48,7 +48,7 @@ import axios from 'axios'
             },
            async getUser(id) { 
                try {
-                    await axios.get('http://localhost:3000/v1/users/' + id)
+                    await axios.get(`${process.env.VUE_APP_HOST}/users/` + id)
                     this.user;
                }catch(e) {
                    this.errors.push(e);

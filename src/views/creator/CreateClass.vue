@@ -85,7 +85,7 @@ components: {
 
     async createGroup(group){
       try{
-         await axios.post("http://localhost:3000/v1/class/" ,  {
+         await axios.post(`${process.env.VUE_APP_HOST}/class/` ,  {
               name: group.name,
               description: group.description,
             });

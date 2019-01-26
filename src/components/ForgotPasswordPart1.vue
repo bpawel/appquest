@@ -38,7 +38,7 @@ import router from '../router'
         methods: {
             async confirmEmail(user){
                 try{
-                    const res = await axios.post("http://localhost:3000/v1/auth/forgot-password",  {
+                    const res = await axios.post(`${process.env.VUE_APP_HOST}/auth/forgot-password`,  {
                         email: this.user.email,
                 });
                 if (res.data.message) {

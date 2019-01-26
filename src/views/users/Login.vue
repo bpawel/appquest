@@ -81,4 +81,7 @@ a[data-v-2607fb58] {
     margin-left: 5%;
     color: #003c82;
 }
+[data-v-1416c705] {
+    color: #003c82;
+}
 </style>

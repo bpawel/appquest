@@ -94,15 +94,16 @@ import { mapGetters } from 'vuex'
   font-size: 1.2rem;
   background-color: #035abd;
   }
-  a[data-v-7ba5bd90]:-webkit-any-link.navbar-brand {
+  a:-webkit-any-link.navbar-brand {
     text-decoration: none;
     color: #fff;
     font-size: 2.2rem;
 }
-a[data-v-ea59765e]:-webkit-any-link.navbar-brand {
+
+a .navbar-brand .navbar-light {
     text-decoration: none;
     color: #fff;
-    font-size: 2.2rem;
+    font-size: 2.2rem !important;
 }
   @media (min-width: 992px) {
     .navbar-expand-lg .navbar-collapse {

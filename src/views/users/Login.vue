@@ -77,15 +77,7 @@ input.form-control:hover {
     border-bottom: 2px solid #003c82;
     box-shadow: none;
 }
-a[data-v-2607fb58] {
-    margin-left: 5%;
-    color: #003c82;
-}
-[data-v-1416c705] {
-    color: #003c82;
-}
-
-a[data-v-4405465a] {
+a {
     margin-left: 5%;
     color: #003c82;
 }

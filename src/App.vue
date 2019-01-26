@@ -5,7 +5,7 @@
   <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
     
     
-      <a class="navbar-brand" href="#">AppQuest</a>
+      <a class="navbar-brand" href="/#">AppQuest</a>
       <b-collapse is-nav id="nav_collapse">
       <div class="navbar-nav ml-auto">
         <b-link v-if="!isLogged"  v-b-modal.myModal class="nav-item nav-link active mr-3" >Zaloguj się<span class="sr-only">(current)</span></b-link>

@@ -1,13 +1,13 @@
 <template>
   <div class="home" id="home">
-   <div class="container pt-5">
+   <div class="container">
       <div class="row">
         <div class="col-md-7">
           <div class="jumbotron">
-            <h1 class="display-1 font-weight-bold">Witaj na stronie</h1>
+            <h1 class="font-weight-bold">Witaj na stronie</h1>
             <p class="lead display-4">Ucz się i rozwiązuj testy online!!!</p>
             <hr class="my-4">
-           <b-btn v-b-modal.register>Dołącz do nas</b-btn>
+           <b-btn class="mb-5" v-b-modal.register>Dołącz do nas</b-btn>
           </div>
           <Register></Register> 
           <Login></Login>
